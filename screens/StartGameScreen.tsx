@@ -4,6 +4,10 @@ import Primary from "../components/buttons/Primary";
 import colors from "../utils/colors";
 
 function StartGameScreen() {
+  const onPress = () => {
+    return;
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -11,8 +15,8 @@ function StartGameScreen() {
         keyboardType="number-pad"
         maxLength={2}
       />
-      <Primary>Reset</Primary>
-      <Primary>Confirm</Primary>
+      <Primary onPress={onPress}>Reset</Primary>
+      <Primary onPress={onPress}>Confirm</Primary>
     </View>
   );
 }
@@ -23,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     marginTop: 100,
-    backgroundColor: colors.red,
+    backgroundColor: colors.red[900],
     marginHorizontal: 24,
     borderRadius: 8,
     // android shadow
