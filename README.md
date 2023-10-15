@@ -1,8 +1,8 @@
-# POC Nest.js with GraphQL
+# Guess my Number
 
 ## Table of contents
 
-- [POC Nest.js with GraphQL](#poc-nestjs-with-graphql)
+- [Guess my Number](#guess-my-number)
   - [Table of contents](#table-of-contents)
   - [General info](#general-info)
   - [Technologies](#technologies)
