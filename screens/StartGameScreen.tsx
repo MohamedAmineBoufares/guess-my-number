@@ -7,6 +7,7 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   Alert,
+  Text,
 } from "react-native";
 import Primary from "../components/ui/buttons/Primary";
 import colors from "../utils/colors";
@@ -52,6 +53,7 @@ function StartGameScreen({ handlePickerNumber }: Props) {
         style={styles.image}
         imageStyle={{ borderRadius: 8, opacity: 0.8 }}
       >
+        <Text style={styles["main-tile"]}>Enter a number</Text>
         <TextInput
           style={styles.numberInput}
           keyboardType="number-pad"
@@ -89,6 +91,11 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 6,
     shadowOpacity: 0.25,
+  },
+  "main-tile": {
+    color: colors.yellow,
+    fontSize: 24,
+    fontWeight: "bold",
   },
   image: {
     justifyContent: "center",
