@@ -17,15 +17,22 @@ export default function App() {
   });
 
   const [pickerNumber, setPickerNumber] = useState(0);
+  const [rounds, setRounds] = useState(0);
   const [gameIsOver, setGameIsOver] = useState(false);
 
   const handlePickerNumber = useCallback((number: number) => {
     setPickerNumber(number);
   }, []);
 
-  const handleGameOver = useCallback(() => {
-    setPickerNumber(0);
+  const handleGameOver = useCallback((numberOfRounds: number) => {
     setGameIsOver(true);
+    setRounds(numberOfRounds);
+  }, []);
+
+  const onRestart = useCallback(() => {
+    setPickerNumber(0);
+    setRounds(0);
+    setGameIsOver(false);
   }, []);
 
   const screen = () => {
@@ -40,7 +47,13 @@ export default function App() {
     }
 
     if (gameIsOver) {
-      return <GameOverScreen />;
+      return (
+        <GameOverScreen
+          userNumber={pickerNumber}
+          rounds={rounds}
+          onRestart={onRestart}
+        />
+      );
     }
 
     return <StartGameScreen handlePickerNumber={handlePickerNumber} />;

@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import Title from "../components/ui/titles/Title";
 import { useCallback, useEffect, useState } from "react";
 import NumberContainer from "../components/game/NumberContainer";
@@ -29,7 +29,7 @@ const generateRandomNumber = (
 type Props = {
   pickerNumber: number;
   handlePickerNumber: (number: number) => void;
-  handleGameOver: () => void;
+  handleGameOver: (rounds: number) => void;
 };
 
 function GameScreen({
@@ -39,6 +39,7 @@ function GameScreen({
 }: Props) {
   const guess = generateRandomNumber(min, max, pickerNumber);
   const [currentGuess, setCurrentGuess] = useState(guess);
+  const [rounds, setRounds] = useState([guess]);
 
   const guessNextNumber = useCallback((direction: "lower" | "higher") => {
     if (
@@ -58,13 +59,19 @@ function GameScreen({
 
     const newGuess = generateRandomNumber(min, max, currentGuess);
     setCurrentGuess(newGuess);
+    setRounds((prev) => [newGuess, ...prev]);
   }, []);
 
   useEffect(() => {
     if (currentGuess === pickerNumber) {
-      handleGameOver();
+      handleGameOver(rounds.length);
     }
   }, [currentGuess, pickerNumber, handleGameOver]);
+
+  useEffect(() => {
+    min = 1;
+    max = 100;
+  }, []);
 
   return (
     <View style={styles.screen}>
@@ -85,8 +92,15 @@ function GameScreen({
           <Feather name="refresh-cw" size={24} color="white" />
         </Primary>
       </View>
-      <View>
-        <Text style={styles.text}>Rounds</Text>
+      <View style={styles.listContainer}>
+        <FlatList
+          windowSize={10}
+          data={rounds}
+          keyExtractor={(item, idx) => `${item}-${idx}`}
+          renderItem={({ item }) => (
+            <Text style={[styles.text, styles.guessItem]}>{item} #</Text>
+          )}
+        />
       </View>
     </View>
   );
@@ -113,5 +127,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.yellow,
     marginTop: 16,
+  },
+  listContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  guessItem: {
+    backgroundColor: colors.yellow,
+    color: colors.red[500],
+    borderRadius: 8,
+    width: 100,
   },
 });
